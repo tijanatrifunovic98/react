@@ -1,10 +1,47 @@
 import Header from './components/Header'
+import Items from './components/Items'
+import { useState } from 'react'
+import Item from './components/Item'
 function App() {
-  //const name=' Tijana'
-  //const x=true
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      text: 'T-Shirt',
+      price: 1000,
+      day: 'Feb 12th at 2:30pm',
+      reminder: false,
+    },
+    {
+      id: 2,
+      text: 'Telephone',
+      price: 120000,
+      day: 'Jan 5th at 8:30pm',
+      reminder: true,
+    },
+    {
+      id: 3,
+      text: 'Apples',
+      price: 300,
+      day: 'Feb 10th at 5:30pm',
+      reminder: true,
+    },
+
+  ]
+
+  )
+  //Brisanje
+  const deleteItem = (id) => {
+    setItems(items.filter((item) => item.id !== id))
+  }
+  const toggleReminder = (id) => {
+    setItems(items.map((item) => item.id === id ? { ...item, reminder: !item.reminder } : item))
+
+  }
   return (
     <div className='container'>
-     <Header />
+      <Header />
+      {items.length > 0 ? <Items items={items} onDelete=
+        {deleteItem} onToggle={toggleReminder} /> : 'No Items To Show'}
     </div>
   );
 }
