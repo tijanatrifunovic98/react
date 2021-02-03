@@ -1,9 +1,13 @@
 import Header from './components/Header'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Items from './components/Items'
 import AddItem from './components/AddItem'
 import { useState } from 'react'
 import Item from './components/Item'
+import Footer from './components/Footer'
+import About from './components/About'
 function App() {
+  const [showAddItem, setShowAddItem] = useState(false)
   const [items, setItems] = useState([
     {
       id: 1,
@@ -27,14 +31,12 @@ function App() {
       reminder: true,
     },
 
-  ]
-
-  )
+  ])
   //addd item
   const addItem = (item) => {
     const id = Math.floor(Math.random() * 10000) + 1
     const newItem = { id, ...item }
-    setItems([...items,newItem])
+    setItems([...items, newItem])
 
   }
   //Brisanje
@@ -46,14 +48,29 @@ function App() {
 
   }
   return (
-    <div className='container'>
-      <Header />
-      <AddItem onAdd={addItem} />
-      {items.length > 0 ? <Items items={items} onDelete=
-        {deleteItem} onToggle={toggleReminder} /> : 'No Items To Show'}
-    </div>
+    <Router>
+      <div className='container'>
+        <Header onAdd={() => setShowAddItem(!showAddItem)} showAdd={showAddItem} />
+
+        
+        <Route path='/' exact render={(props) =>
+        (
+          <>
+            {showAddItem && <AddItem onAdd={addItem} />}
+            {items.length > 0 ? (<Items items={items} onDelete=
+              {deleteItem} onToggle={toggleReminder} />) : ('No Items To Show')}
+          </>
+
+        )} />
+      
+        <Route path='/about' component={About} />
+
+        <Footer />
+      </div>
+    </Router>
   );
 }
+
 
 
 export default App;
