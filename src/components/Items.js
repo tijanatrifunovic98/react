@@ -1,14 +1,14 @@
 import Item from './Item'
-const Items = ({items,onDelete,onToggle}) => {
-    
+const Items = ({ items, onDelete, onToggle }) => {
+
     return (
         <>
             {items.map((item) => (
                 <Item key={item.id} item={item} onDelete={onDelete}
-                onToggle={onToggle}/>
+                    onToggle={onToggle} />
             ))}
         </>
     )
 }
 
-export default Items
+    export default Items
